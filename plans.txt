@@ -24,32 +24,44 @@ Create a web based game where 2 users battle using their drawings.
 ----------------------------------------------------------------
 
 File and Folder STRUCTURE:
-backend/
-├── app/
-│   ├── __init__.py         # Makes the app a package
-│   ├── main.py             # Entry point for the application
-│   ├── api/                # API route definitions
-│   │   ├── __init__.py     # Makes the api folder a package
-│   │   ├── routes.py       # Defines game-related routes
-│   ├── core/               # Core configurations and utilities
-│   │   ├── __init__.py     # Makes the core folder a package
-│   │   ├── config.py       # Application settings/configurations
-│   ├── services/           # Business logic (e.g., game rules, ML integration)
-│   │   ├── __init__.py     # Makes the services folder a package
-│   │   ├── game_logic.py   # Game-specific logic and rules
-│   ├── models/             # Pydantic models for request/response validation
-│   │   ├── __init__.py     # Makes the models folder a package
-│   │   ├── game.py         # Models for game-related data
-│   ├── static/             # Static assets (if needed, e.g., icons)
-│   ├── templates/          # HTML templates (if needed for rendering pages)
-│   ├── ml/                 # Machine learning model integration
-│   │   ├── __init__.py     # Makes the ml folder a package
-│   │   ├── classifier.py   # ML model logic for recognizing drawings
-├── tests/                  # Unit and integration tests
-│   ├── test_api.py         # Tests for API routes
-├── requirements.txt        # Python dependencies
-├── Dockerfile              # Optional: For containerization
-├── README.md               # Documentation for the project
+Draw-Battle/
+│
+├── backend/                       # Backend logic and API
+│   ├── app/                       
+│   │   ├── __init__.py            # Initialize your application
+│   │   ├── config.py              # Configuration settings (DB, secret keys)
+│   │   ├── models.py              # Database models (SQLAlchemy)
+│   │   ├── services/              # Logic for game and interactions
+│   │   │   ├── __init__.py        # Service initialization
+│   │   │   ├── game_logic.py      # Game logic functions
+│   │   │   └── player_logic.py    # Player-related functions
+│   │   ├── api/                   # API routes for interactions (Flask routes or FastAPI)
+│   │   │   ├── __init__.py
+│   │   │   ├── routes.py          # Routes handling image submission, game status, etc.
+│   │   │   └── auth.py            # User authentication (if applicable)
+│   │   └── main.py                # Main entry point for the application
+│   ├── tests/                     # Tests for backend logic
+│   │   ├── __init__.py
+│   │   ├── test_game_logic.py     # Tests for game logic
+│   │   └── test_routes.py         # Tests for API routes
+│   ├── requirements.txt           # Backend dependencies (Flask, SQLAlchemy, etc.)
+│   └── Dockerfile                 # Dockerfile for containerizing the backend app
+│
+├── frontend/                      # Frontend code (Dash or Flask with Jinja2)
+│   ├── app/                       
+│   │   ├── __init__.py            # Initialize the frontend app
+│   │   ├── layouts.py             # Layout and UI components
+│   │   ├── callbacks.py           # Callbacks for interactivity (if using Dash)
+│   │   └── assets/                # Static files like images, CSS, JS
+│   │       └── style.css          # Custom CSS for frontend design
+│   ├── requirements.txt           # Frontend dependencies (Dash, Flask, etc.)
+│   └── Dockerfile                 # Dockerfile for containerizing the frontend app
+│
+├── docker-compose.yml             # Docker Compose configuration for running everything together
+├── .env                           # Environment variables (for DB credentials, secret keys)
+├── README.md                      # Project documentation and setup instructions
+└── venv/                          # Virtual environment for dependencies
+
 
 
 
