@@ -50,3 +50,46 @@ backend/
 ├── requirements.txt        # Python dependencies
 ├── Dockerfile              # Optional: For containerization
 ├── README.md               # Documentation for the project
+
+
+
+
+Draw-Battle/
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   │   └── routes.py  # Defines FastAPI routes (API endpoints)
+│   │   ├── services/
+│   │   │   └── game_logic.py  # Core game logic (handles player submissions, determines winner)
+│   │   ├── ml/
+│   │   │   └── classifier.py  # Handles image classification using pre-trained models
+│   │   ├── main.py  # Entry point for the FastAPI app
+│   │   └── __init__.py
+│   └── tests/
+│       └── test-pics/  # Contains test images
+└── venv/  # Python virtual environment
+
+
+Key Concepts for the Game Loop
+    Game Rounds: Each player has 3 pictures to draw, and for each round, the pictures are uploaded and compared to an opponent's drawing.
+    XP Gain: The player with the highest confidence (from the model) in each round wins, and they gain XP.
+    Leveling System: Based on XP, players are matched with others at similar levels.
+    ----------------------------------------------------------------
+Updated Game Flow
+1. Player Submissions
+    Each player will submit 3 pictures. For each picture:
+        Image Classification: The picture is sent to the model for classification.
+        Confidence Comparison: The confidence scores are compared between the two players for each picture.
+2. Round Logic
+    The game loop runs through 3 rounds (one for each picture).
+    For each round:
+        Each player submits a picture.
+        The pictures are classified, and the player with the highest confidence wins the round.
+        The overall winner of the round gains XP.
+3. XP System
+    Each win in a round gives the player a set amount of XP.
+    The XP is added to the player’s current XP.
+    Players with similar XP are matched for the next round.
+4. Leveling Up
+    As a player accumulates XP, they move to a higher level.
+    The system can check the player’s XP to find opponents with similar XP.

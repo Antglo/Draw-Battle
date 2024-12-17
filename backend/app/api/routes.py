@@ -1,38 +1,36 @@
-# backend/app/api/routes.py
-
 from fastapi import APIRouter, UploadFile, Form
+from app.services.game_logic import GameLogic
 from app.ml.classifier import classify_image
-from app.services.game_logic import SessionManager, determine_winner
 
 router = APIRouter()
-session_manager = SessionManager()
 
-@router.post("/upload-drawing")
-async def upload_drawing(
-    file: UploadFile,
-    session_id: str = Form(...),
-    player_id: str = Form(...)
+@router.post("/start-game")
+async def start_game(player1_id: str, player2_id: str, session_id: str):
+    GameLogic.start_game(session_id, player1_id, player2_id)
+    return {"status": "Game started", "session_id": session_id}
+
+@router.post("/submit-drawing")
+async def submit_drawing(
+    session_id: str,
+    player_id: str,
+    file: UploadFile
 ):
-    # Read uploaded image
-    image_bytes = await file.read()
+    # Classify the drawing
+    label, confidence = classify_image(file.file)
+    
+    # Submit the drawing for the current game session
+    result = GameLogic.submit_drawing(session_id, player_id, label, confidence)
+    return result
 
-    # Classify image to get label
-    drawing_label = classify_image(image_bytes)
+@router.get("/get-level/{player_id}")
+async def get_level(player_id: str):
+    return GameLogic.get_player_level(player_id)
 
-    # Add the label to the session
-    session_manager.add_player_drawing(session_id, player_id, drawing_label)
+@router.post("/matchmake")
+async def matchmake(player_id: str, player_xp: int):
+    result = GameLogic.matchmake(player_id, player_xp)
+    return result
 
-    # Check session for both players
-    session_data = session_manager.get_session_data(session_id)
-    if len(session_data) == 2:
-        # Process game logic if both players have submitted
-        player_ids = list(session_data.keys())
-        labels = list(session_data.values())
-        result = determine_winner(labels[0], labels[1])
-
-        # Clear session after determining the result
-        session_manager.clear_session(session_id)
-
-        return {"result": result, "details": session_data}
-
-    return {"status": "Waiting for the other player", "current_data": session_data}
+@router.get("/get-level/{player_id}")
+async def get_level(player_id: str):
+    return GameLogic.get_player_level(player_id)
