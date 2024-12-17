@@ -1,0 +1,52 @@
+Create a web based game where 2 users battle using their drawings.
+
++Frontend (React.js):
++
++    Handles the UI (drawing canvas, game state updates).
++    Communicates with the backend via REST APIs and WebSocket.
+----------------------------------------------------------------
++Backend (FastAPI):
++
++    Handles game logic, user management, and API requests.
++    Processes and classifies drawings using ML models.
+----------------------------------------------------------------
++Database (PostgreSQL):
++
++    Stores user data, game history, leaderboards.
+----------------------------------------------------------------
++Real-Time Communication:
++
++    Uses WebSockets for live updates.
+----------------------------------------------------------------
++ML Model Server (Optional):
++
++    Serves the drawing classification model as a microservice.
+----------------------------------------------------------------
+
+File and Folder STRUCTURE:
+backend/
+├── app/
+│   ├── __init__.py         # Makes the app a package
+│   ├── main.py             # Entry point for the application
+│   ├── api/                # API route definitions
+│   │   ├── __init__.py     # Makes the api folder a package
+│   │   ├── routes.py       # Defines game-related routes
+│   ├── core/               # Core configurations and utilities
+│   │   ├── __init__.py     # Makes the core folder a package
+│   │   ├── config.py       # Application settings/configurations
+│   ├── services/           # Business logic (e.g., game rules, ML integration)
+│   │   ├── __init__.py     # Makes the services folder a package
+│   │   ├── game_logic.py   # Game-specific logic and rules
+│   ├── models/             # Pydantic models for request/response validation
+│   │   ├── __init__.py     # Makes the models folder a package
+│   │   ├── game.py         # Models for game-related data
+│   ├── static/             # Static assets (if needed, e.g., icons)
+│   ├── templates/          # HTML templates (if needed for rendering pages)
+│   ├── ml/                 # Machine learning model integration
+│   │   ├── __init__.py     # Makes the ml folder a package
+│   │   ├── classifier.py   # ML model logic for recognizing drawings
+├── tests/                  # Unit and integration tests
+│   ├── test_api.py         # Tests for API routes
+├── requirements.txt        # Python dependencies
+├── Dockerfile              # Optional: For containerization
+├── README.md               # Documentation for the project
