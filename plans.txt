@@ -105,3 +105,37 @@ Updated Game Flow
 4. Leveling Up
     As a player accumulates XP, they move to a higher level.
     The system can check the player’s XP to find opponents with similar XP.
+
+
+
+
+
+
+
+
+Draw-battle/
+    backend/
+        app/
+            api/
+                __init__.py
+                routes.py
+            core/
+                __init__.py
+                config.py
+                models.py
+            ml/
+                model/
+                    mobilenet_model.h5
+                __init__.py
+                classifier.py
+            models/
+                __init__.py
+                game.py
+            services/
+                __init__.py
+                game_logic.py
+            static/
+            templates/
+            __init__.py
+            main.py
+        tests/
